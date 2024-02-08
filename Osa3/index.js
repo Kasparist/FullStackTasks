@@ -5,7 +5,7 @@ const cors = require('cors')
 
 // morgan.token('type', function(req, res) {return req.headers['content-type']})
 
-morgan.token('post-content', (tokens) => {return JSON.stringify(tokens.body)})
+morgan.token('post-content', (tokens) => { return JSON.stringify(tokens.body) })
 
 app.use(express.json())
 app.use(morgan('tiny'))
@@ -59,26 +59,26 @@ app.post('/api/persons', (request, response) => {
     person.id = id
     const personName = persons.find(p => p.name === person.name)
 
-    if (!person.name){
+    if (!person.name) {
         return response.status(400).json({
             error: 'name missing'
         })
     }
-    
-    if(!person.number){
+
+    if (!person.number) {
         return response.status(400).json({
             error: 'number missing'
         })
     }
 
-    if(personName){
+    if (personName) {
         return response.status(400).json({
             error: 'name already exists'
         })
     }
 
     persons = persons.concat(person)
-    
+
     console.log(person.id)
     response.json(person)
 })
@@ -91,11 +91,12 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.put('/api/persons/:id', async (req, res, next) => {
-    const person = {id: req.params.id, name: req.body.name, number: req.body.number}
+    const person = { id: req.params.id, name: req.body.name, number: req.body.number }
     res.json(person)
     next()
 })
 
-const PORT = 3001
-app.listen(PORT)
-console.log(`Server running on port ${PORT}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+})
