@@ -3,8 +3,6 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 
-// morgan.token('type', function(req, res) {return req.headers['content-type']})
-
 morgan.token('post-content', (tokens) => { return JSON.stringify(tokens.body) })
 
 app.use(express.json())
@@ -40,6 +38,7 @@ app.get('/', (request, response) => {
 })
 
 app.get('/api/persons', (request, response) => {
+    console.log("BÄKK", persons)
     response.json(persons)
 })
 
